@@ -25,8 +25,7 @@ st.set_page_config(
 def load_model_assets():
     if not MODEL_PATH.exists() or not METADATA_PATH.exists():
         raise FileNotFoundError(
-            "Artefak model belum tersedia. Jalankan seluruh notebook terlebih dahulu "
-            "untuk membuat models/svm_pipeline.pkl dan models/model_metadata.json."
+            "Artefak model belum tersedia pada lokasi yang diharapkan."
         )
 
     with METADATA_PATH.open("r", encoding="utf-8") as metadata_file:
@@ -91,9 +90,26 @@ st.caption(
 
 try:
     pipeline, metadata, feature_extractor, preprocess, device = load_model_assets()
-except (FileNotFoundError, ValueError, OSError) as error:
+except FileNotFoundError as error:
     st.error(str(error))
-    st.info("Buka notebook.ipynb, lalu jalankan seluruh sel dari atas ke bawah.")
+    st.code(
+        f"Pipeline: {MODEL_PATH} (ada: {MODEL_PATH.exists()})\n"
+        f"Metadata: {METADATA_PATH} (ada: {METADATA_PATH.exists()})"
+    )
+    st.info(
+        "Jika notebook baru selesai dijalankan, klik tombol di bawah untuk "
+        "memeriksa kembali artefak tanpa me-restart aplikasi."
+    )
+    if st.button("Muat Ulang Artefak", type="primary"):
+        load_model_assets.clear()
+        st.rerun()
+    st.stop()
+except (ValueError, OSError) as error:
+    st.error(f"Artefak ditemukan tetapi gagal dimuat: {error}")
+    st.info(
+        "Pastikan aplikasi memakai environment dan versi scikit-learn yang sama "
+        "dengan notebook training."
+    )
     st.stop()
 
 uploaded_file = st.file_uploader(
