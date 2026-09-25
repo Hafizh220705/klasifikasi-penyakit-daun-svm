@@ -55,6 +55,6 @@
     "python": "3.10.0",
     "torch": "2.11.0+cu128",
     "torchvision": "0.26.0+cu128",
-    "scikit_learn": "1.7.0"
+    "scikit_learn": "1.7.2"
   }
 }
