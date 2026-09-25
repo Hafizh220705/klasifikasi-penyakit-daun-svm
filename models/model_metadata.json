@@ -1,0 +1,60 @@
+{
+  "model_name": "Potato Leaf Disease Classification — ResNet50 + SVM",
+  "feature_extractor": "torchvision.models.resnet50",
+  "resnet50_weights": "IMAGENET1K_V2",
+  "feature_dimension": 2048,
+  "image_size": 224,
+  "classes": [
+    "Early Blight",
+    "Healthy",
+    "Late Blight"
+  ],
+  "random_state": 42,
+  "test_size": 0.2,
+  "class_weight": "balanced",
+  "pca_enabled": true,
+  "pca_variance": 0.95,
+  "best_params": {
+    "svc__C": 10,
+    "svc__gamma": "scale",
+    "svc__kernel": "rbf"
+  },
+  "best_cv_macro_f1": 0.9579689802916969,
+  "test_metrics": {
+    "Accuracy": 0.9767981438515081,
+    "Balanced Accuracy": 0.9379032258064517,
+    "Macro Precision": 0.9838848756995965,
+    "Macro Recall": 0.9379032258064517,
+    "Macro F1": 0.9583921464648434,
+    "Weighted Precision": 0.9775659522500184,
+    "Weighted Recall": 0.9767981438515081,
+    "Weighted F1": 0.9764729681726562,
+    "Macro ROC-AUC OvR": 0.9986221663641017
+  },
+  "preprocessing": {
+    "source": "ResNet50_Weights.DEFAULT.transforms()",
+    "resize_size": [
+      232
+    ],
+    "crop_size": [
+      224
+    ],
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "rgb_conversion": true
+  },
+  "library_versions": {
+    "python": "3.10.0",
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "scikit_learn": "1.7.0"
+  }
+}
